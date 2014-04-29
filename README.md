@@ -26,7 +26,6 @@ Insert that:
 
     def change
       create_table :metrics do |t|
-        t.string :title
         t.string :key
         t.text :data_set
 
@@ -42,13 +41,35 @@ Run migration:
 
     $ rake db:migrate
 
+
+Include dygraph js lib into your application.js:
+
+    //= require dygraph-combined
+
 ## Usage
 
-TODO: Write usage instructions here
+Add some data points:
+
+    SimpleMetric::Metric.add_data_point "Users count", 30.days.ago, 10
+    SimpleMetric::Metric.add_data_point "Users count", 20.days.ago, 15
+    SimpleMetric::Metric.add_data_point "Users count", 10.days.ago, 25
+
+Display graph into your erb template:
+
+    <%= simple_metric_graph "Users count" %>
+
+Plot multiple metrics:
+
+    <%= simple_metric_graph "metric_1", "metric_2" %>
+
+Add custom titles:
+
+    <%= simple_metric_graph ["metric_1", "Title for metric 1"], ["metric_2", "Title 2"] %>
+
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/simple-metric/fork )
+1. Fork it ( https://github.com/sergio-fry/simple-metric/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
