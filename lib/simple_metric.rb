@@ -62,11 +62,46 @@ module SimpleMetric
 
     def initialize(data_points)
       @data_points = data_points.sort_by { |point| point.x }
-      @spliner = Spliner::Spliner.new(@data_points.map(&:x), @data_points.map(&:y))
     end
 
     def get_value(x)
-      @spliner[x.to_f]
+      x = x.to_f
+      value = @data_points.find { |point| point.x == x }.try(:y)
+
+      if value.blank?
+        points = [points_before(x, 2), points_after(x, 2)].flatten
+
+        spliner = Spliner::Spliner.new(points.map(&:x), points.map(&:y))
+        value = spliner[x]
+      end
+
+      value
+    end
+
+    private
+
+    def points_before(x, count)
+      points = []
+
+      @data_points.reverse.each do |point|
+        break if points.size >= count
+
+        points << point if point.x <= x
+      end
+
+      points.sort_by{ |p| p.x }
+    end
+
+    def points_after(x, count)
+      points = []
+
+      @data_points.each do |point|
+        break if points.size >= count
+
+        points << point if point.x >= x
+      end
+
+      points.sort_by{ |p| p.x }
     end
   end
 
@@ -79,6 +114,8 @@ module SimpleMetric
   end
 
   class Metric < ActiveRecord::Base
+    MAX_SIZE = 1000
+
     serialize :data_set
     validates :key, :presence => true, :uniqueness => true
 
@@ -92,6 +129,8 @@ module SimpleMetric
       raise "value '#{value}' is not a number" unless value.is_a? Numeric
 
       data_set << [date.to_time, value]
+
+      data_set.shift(data_set.size - MAX_SIZE) if data_set.size > MAX_SIZE
 
       save!
     end
