@@ -1,6 +1,6 @@
-# Simple::Metric
+# SimpleMetric
 
-TODO: Write a gem description
+Rails metric solution. Store data-points, display graphs. Based on dygraphs js lib.
 
 ## Installation
 
@@ -15,6 +15,32 @@ And then execute:
 Or install it yourself as:
 
     $ gem install simple-metric
+
+Add migration:
+
+    $ rails g migration create_metrics
+
+Insert that:
+    
+    ...
+
+    def change
+      create_table :metrics do |t|
+        t.string :title
+        t.string :key
+        t.text :data_set
+
+        t.timestamps
+      end
+
+      add_index :metrics, :key, :unique => true
+    end
+
+    ...
+
+Run migration:
+
+    $ rake db:migrate
 
 ## Usage
 
