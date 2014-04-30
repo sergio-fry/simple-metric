@@ -2,6 +2,8 @@
 
 Rails metric solution. Store data-points, display graphs. Based on dygraphs js lib.
 
+[![Gem Version](https://badge.fury.io/rb/simple_metric.svg)](http://badge.fury.io/rb/simple_metric)
+
 ## Example
 
 
