@@ -1,0 +1,22 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Naming/FileName:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 130
+
+RSpec/FilePath:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
