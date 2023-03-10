@@ -18,7 +18,7 @@ SimpleMetric::Metric.add_data_point "Users count", 20.days.ago, 15
 SimpleMetric::Metric.add_data_point "Users count", 10.days.ago, 25
 ```
 
-Add many points
+Add many data points:
 
 ```ruby
 SimpleMetric::Metric.add_data_points(
@@ -67,7 +67,15 @@ Or install it yourself as:
 $ gem install simple-metric
 ```
 
-Add migration:
+## Add migration
+
+By generator:
+
+```sh
+rails g active_record:simple_metric Metric
+```
+
+or by rails migration:
 
 ```sh
 $ rails g migration create_metrics
