@@ -45,7 +45,7 @@ module SimpleMetric
 
           // CSV or path to a CSV file.
           "Date,#{metrics.map { |m| titles[m.id] }.join(',')}\\n" +
-          "#{dates.map { |date| format_date(date, metrics) }.join }"
+          "#{dates.map { |date| format_date(date, metrics) }.join}"
         );
 
         $("#" + container_id).data("dygraph", g);
