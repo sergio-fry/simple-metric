@@ -22,10 +22,8 @@ Add many data points:
 
 ```ruby
 SimpleMetric::Metric.add_data_points(
-  [
-    ["Users count", 30.days.ago, 10],
-    ["Sales count", 10.days.ago, 1000]
-  ]
+  ["Users count", 30.days.ago, 10],
+  ["Sales count", 10.days.ago, 1000]
 )
 ```
 
