@@ -19,9 +19,7 @@ module SimpleMetric
     # @param [Time] date.
     # @param [Numeric] value.
     def self.add_data_points(*points)
-      points.each do |point|
-        find_or_create_by(key: point[0]).add_data_point(point[1], point[2])
-      end
+      points.each { |point| add_data_point(*point) }
     end
 
     # @param [Time] date.
