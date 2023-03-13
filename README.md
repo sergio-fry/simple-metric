@@ -6,76 +6,109 @@ Rails metric solution. Store data-points, display graphs. Based on dygraphs js l
 
 ## Example
 
-
-![example 1](http://sergio-fry.github.io/simple-metric/images/example.jpeg)
-
+![example 1](example.jpeg)
 
 ## Usage
 
 Add some data points:
 
-    SimpleMetric::Metric.add_data_point "Users count", 30.days.ago, 10
-    SimpleMetric::Metric.add_data_point "Users count", 20.days.ago, 15
-    SimpleMetric::Metric.add_data_point "Users count", 10.days.ago, 25
+```ruby
+SimpleMetric::Metric.add_data_point "Users count", 30.days.ago, 10
+SimpleMetric::Metric.add_data_point "Users count", 20.days.ago, 15
+SimpleMetric::Metric.add_data_point "Users count", 10.days.ago, 25
+```
+
+Add many data points:
+
+```ruby
+SimpleMetric::Metric.add_data_points(
+  ["Users count", 30.days.ago, 10],
+  ["Sales count", 10.days.ago, 1000]
+)
+```
 
 Display graph into your erb template:
 
-    <%= simple_metric_graph "Users count" %>
+```ruby
+<%= simple_metric_graph "Users count" %>
+```
 
 Plot multiple metrics:
 
-    <%= simple_metric_graph "metric_1", "metric_2" %>
+```ruby
+<%= simple_metric_graph "metric_1", "metric_2" %>
+```
 
 Add custom titles:
 
-    <%= simple_metric_graph ["metric_1", "Title for metric 1"], ["metric_2", "Title 2"] %>
-
-
-
+```ruby
+<%= simple_metric_graph ["metric_1", "Title for metric 1"], ["metric_2", "Title 2"] %>
+```
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'simple-metric'
+```txt
+gem 'simple-metric'
+```
 
 And then execute:
 
-    $ bundle
+```sh
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install simple-metric
+```sh
+$ gem install simple-metric
+```
 
-Add migration:
+## Add migration
 
-    $ rails g migration create_metrics
+By generator:
+
+```sh
+rails g active_record:simple_metric Metric
+```
+
+or by rails migration:
+
+```sh
+$ rails g migration create_metrics
+```
 
 Insert that:
-    
-    ...
 
-    def change
-      create_table :metrics do |t|
-        t.string :key
-        t.text :data_set
+```ruby
+...
 
-        t.timestamps
-      end
+def change
+    create_table :metrics do |t|
+    t.string :key
+    t.text :data_set
 
-      add_index :metrics, :key, :unique => true
+    t.timestamps
     end
 
-    ...
+    add_index :metrics, :key, :unique => true
+end
+
+...
+```
 
 Run migration:
 
-    $ rake db:migrate
+```bash
+$ rake db:migrate
+```
 
+Include dygraph js lib into your `application.js`:
 
-Include dygraph js lib into your application.js:
-
-    //= require dygraph-combined
+```js
+//= require dygraph-combined
+```
 
 ## Contributing
 
